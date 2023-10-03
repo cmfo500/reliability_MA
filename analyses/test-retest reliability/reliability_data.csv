@@ -1,0 +1,46 @@
+exp,Study,Publication,Title,Authors,Year,N,Age,Measure,Test-retest,Seq.complexity,SRTT.type,Trials,Interval,design,ISI,Contrast,Trials_included,setting
+1,West et al. (2021),published,"Sustained Attention, Not Procedural Learning, is
+a Predictor of Reading, Language and Arithmetic
+Skills in Children",West et al. ,2021,46,25.333,RT difference score,0.68,SOC,probabilistic,3000,2 to 3,different,250,1,0,in-person
+1,West et al. (2021),published,"Sustained Attention, Not Procedural Learning, is
+a Predictor of Reading, Language and Arithmetic
+Skills in Children",West et al.,2021,46,25.333,Ratio,0.7,SOC,probabilistic,3000,2 to 3,different,250,1,0,in-person
+2,West et al. (2021),published,"Sustained Attention, Not Procedural Learning, is
+a Predictor of Reading, Language and Arithmetic
+Skills in Children",West et al.,2021,109,7.68,RT difference score,0.26,SOC,probabilistic,2000,,different,250,1,0,in-person
+3,Siegelman & Frost (2015),published,"Statistical learning as an individual ability: Theoretical
+perspectives and empirical evidence",Siegelman & Frost,2015,76,24.1,RT difference score,0.47,SOC,probabilistic,1920,approximately 3 months,same,0,1,1,in-person
+4,West et al. (2018),published,The procedural learning deficit hypothesis of language learning disorders: we see some problems,West et al.,2018,90,8.08,RT difference score,0.21,SOC,probabilistic,1000,,same,250,1,0,in-person
+5,Kalra et al. (2019),published,Evidence of stable individual differences in implicit learning,Kalra et al.,2019,52,17.69,Ratio,0.38,SOC,deterministic,1536,13.89,different,250,1,1,in-person
+6,Stark-Inbar et al. (2017),published,"Individual differences in implicit motor learning: task specificity in
+sensorimotor adaptation and sequence learning",Stark-Inbar et al.,2017,25,21.2,RT difference score,0.46,SOC,alternating,7650,2 to 5,different,120,1,0,in-person
+7,Stark-Inbar et al. (2017),published,"Individual differences in implicit motor learning: task specificity in
+sensorimotor adaptation and sequence learning",Stark-Inbar et al.,2017,53,21.2,RT difference score,0.07,SOC,deterministic,2520,0 to 5,different,100,1,0,in-person
+8,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,91,19.18,RT difference score,0.14,SOC,probabilistic,2000,7,different,0,1,0,in-person
+8,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,91,19.18,RT difference score,0.08,SOC,probabilistic,2000,7,different,0,1,1,in-person
+8,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,91,19.18,Regression slopes,0.17,SOC,probabilistic,2000,7,different,0,1,0,in-person
+8,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,91,19.18,Regression slopes,0.17,SOC,probabilistic,2000,7,different,0,1,1,in-person
+9,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,RT difference score,0.22,SOC,probabilistic,2000,7,different,0,1,0,in-person
+9,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,RT difference score,0.25,SOC,probabilistic,2000,7,different,0,1,1,in-person
+9,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,Regression slopes,0.28,SOC,probabilistic,2000,7,different,0,1,0,in-person
+9,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,44,20.09,Regression slopes,0.42,SOC,probabilistic,2000,7,different,0,1,1,in-person
+9,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,44,20.09,RT difference score,0.15,SOC,probabilistic,2000,7,different,0,2,0,in-person
+9,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,RT difference score,0.3,SOC,probabilistic,2000,7,different,0,2,1,in-person
+9,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,Regression slopes,0.41,SOC,probabilistic,2000,7,different,0,2,0,in-person
+9,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,Regression slopes,0.6,SOC,probabilistic,2000,7,different,0,2,1,in-person
+10,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,44,28.52,RT difference score,0.08,SOC,probabilistic,2000,7.85,different,0,1,0,online
+10,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,43,28.52,RT difference score,0.03,SOC,probabilistic,2000,7.85,different,0,1,1,online
+10,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,28.52,Regression slopes,0.44,SOC,probabilistic,2000,7.85,different,0,1,0,online
+10,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,43,28.52,Regression slopes,0.48,SOC,probabilistic,2000,7.85,different,0,1,1,online
+11,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,49,30.41,RT difference score,0.19,SOC,probabilistic,2000,7.85,different,250,1,0,online
+11,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,49,30.41,RT difference score,0.01,SOC,probabilistic,2000,7.85,different,250,1,1,online
+11,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,50,30.41,Regression slopes,0.2,SOC,probabilistic,2000,7.85,different,250,1,0,online
+11,Oliveira et al. (submitted),published,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,49,30.41,Regression slopes,0.09,SOC,probabilistic,2000,7.85,different,250,1,1,online
+12,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,37,26.2,RT difference score,0.07,SOC,probabilistic,2000,7.76,different,0,1,0,online
+12,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,37,26.2,RT difference score,0.05,SOC,probabilistic,2000,7.76,different,0,1,1,online
+12,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,37,26.2,RT difference score,0.34,SOC,probabilistic,2000,7.55,different,0,2,1,online
+12,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,37,26.2,RT difference score,0.33,SOC,probabilistic,2000,7.55,different,0,2,1,online
+12,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,36,26.2,Regression slopes,-0.01,SOC,probabilistic,2000,7.76,different,0,1,0,online
+12,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,36,26.2,Regression slopes,-0.02,SOC,probabilistic,2000,7.76,different,0,1,1,online
+12,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,36,26.2,Regression slopes,0.33,SOC,probabilistic,2000,7.55,different,0,2,1,online
+12,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,37,26.2,Regression slopes,0.33,SOC,probabilistic,2000,7.55,different,0,2,1,online

@@ -1,0 +1,47 @@
+Session,exp,Study,Publication,Title,Authors,Year,N,Age,Measure,Correction,Split-half,Seq.complexity,SRTT.type,Trials,ISI,Testing.setting
+1,1,West et al. (2021),article,"Sustained Attention, Not Procedural Learning, is
+a Predictor of Reading, Language and Arithmetic
+Skills in Children",West et al.,2021,46,25.333,RT difference score,0,0.95,SOC,probabilistic,1500,250,in person
+2,1,West et al. (2021),article,"Sustained Attention, Not Procedural Learning, is
+a Predictor of Reading, Language and Arithmetic
+Skills in Children",West et al.,2021,46,25.333,RT difference score,0,0.88,SOC,probabilistic,1500,250,in person
+1,2,West et al. (2021),article,"Sustained Attention, Not Procedural Learning, is
+a Predictor of Reading, Language and Arithmetic
+Skills in Children",West et al.,2021,110,7.68,RT difference score,0,0.51,SOC,probabilistic,1000,250,in person
+2,2,West et al. (2021),article,"Sustained Attention, Not Procedural Learning, is
+a Predictor of Reading, Language and Arithmetic
+Skills in Children",West et al.,2021,111,7.68,RT difference score,0,0.62,SOC,probabilistic,1000,250,in person
+1,3,West et al. (2018),article,The procedural learning deficit hypothesis of language learning disorders: we see some problems,West et al.,2018,98,8.08,RT difference score,0,0.75,SOC,probabilistic,500,250,in person
+2,3,West et al. (2018),article,The procedural learning deficit hypothesis of language learning disorders: we see some problems,West et al.,2018,90,8.08,RT difference score,0,0.49,SOC,probabilistic,500,250,in person
+1,4,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,95,19.18,RT difference score,0,0.55,SOC,probabilistic,1000,0,in person
+2,4,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,91,19.18,RT difference score,0,0.62,SOC,probabilistic,1000,0,in person
+1,4,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,95,19.18,Regression slopes,0,0.68,SOC,probabilistic,1000,0,in person
+2,4,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,94,19.18,Regression slopes,0,0.7,SOC,probabilistic,1000,0,in person
+1,5,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,RT difference score,0,0.6,SOC,probabilistic,1000,0,in person
+2,5,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,RT difference score,0,0.55,SOC,probabilistic,1000,0,in person
+3,5,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,43,20.09,RT difference score,0,0.23,SOC,probabilistic,1000,0,in person
+1,5,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,20.09,Regression slopes,0,0.77,SOC,probabilistic,1000,0,in person
+2,5,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,47,20.09,Regression slopes,0,0.55,SOC,probabilistic,1000,0,in person
+3,5,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,44,20.09,Regression slopes,0,0.81,SOC,probabilistic,1000,0,in person
+1,6,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,62,30.41,RT difference score,0,0.56,SOC,probabilistic,1000,250,online
+2,6,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,48,30.41,RT difference score,0,0.69,SOC,probabilistic,1000,250,online
+1,6,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,63,30.41,Regression slopes,0,0.71,SOC,probabilistic,1000,250,online
+2,6,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,49,30.41,Regression slopes,0,0.69,SOC,probabilistic,1000,250,online
+1,7,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,59,28.52,RT difference score,0,0.67,SOC,probabilistic,1000,0,online
+2,7,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,28.52,RT difference score,0,0.77,SOC,probabilistic,1000,0,online
+1,7,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,61,28.52,Regression slopes,0,0.93,SOC,probabilistic,1000,0,online
+2,7,Oliveira et al. (submitted),preprint,"Reliability Of The Serial Reaction Time Task: If At First You Don't Succeed, Try Try Try Again",Oliveira et al.,submitted,45,28.52,Regression slopes,0,0.83,SOC,probabilistic,1000,0,online
+1,8,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,39,26.2,RT difference score,0,0.46,SOC,probabilistic,1000,0,online
+1,8,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,38,26.2,Regression slopes,0,0.25,SOC,probabilistic,1000,0,online
+2,8,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,39,26.2,RT difference score,0,0.39,SOC,probabilistic,1000,0,online
+2,8,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,40,26.2,Regression slopes,0,0.47,SOC,probabilistic,1000,0,online
+3,8,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,36,26.2,RT difference score,0,0.71,SOC,probabilistic,1000,0,online
+3,8,Oliveira et al. (in prep),Doctoral thesis,Procedural learning in adults with and without dyslexia: Reliability and individual differences,Oliveira et al.,2022,36,26.2,Regression slopes,0,0.72,SOC,probabilistic,1000,0,online
+1,9,Brown (2010),Doctoral thesis,An Analysis of Functional Differences in Implicit Learning,Brown,2010,103,31.97,RT difference score,Spearman-Brown,0.63,SOC,probabilistic,1008,0,in person
+1,10,Lammertink et al. (2020),article,Statistical Learning in the Visuomotor Domain and Its relation to Grammatical Proficiency in Children with and without Developmental Language Disorder: A conceptual replication and meta-analysis,Lammertink et al.,2020,35,9.083333333,Regression slopes,Spearman-Brown,0.68,FOC,deterministic,380,250,in person
+1,11,Feldman et al. (1995),article,Correlational analyses of procedural and declarative learning performance,"Feldman, Kerr & Streissguth",1995,451,14.4,RT difference score,Spearman-Brown,0.89,FOC,deterministic,508,500,in person
+1,12,van Witteloostuijn et al. (2021),article,The contribution of individual differences in statistical learning to reading and spelling performance in children with and without dyslexia,van Witteloostuijn et al.,2021,50,9.75,Regression slopes,Spearman-Brown,0.7146233,FOC,deterministic,380,250,in person
+1,13,Farkas et al. (2023),article,The complexity of measuring reliability in learning tasks: An illustration using the Alternating Serial Reaction Time Task,Farkas et al.,2023,180,21.61,RT difference score,0,0.646,SOC,alternating,3825,0,in person
+1,14,Buffington et al. (2021),article,The reliability and validity of procedural memory assessments used in second language acquisition research,Buffington et al.,2021,99,19.3,RT difference score,"Krus and Helmstadter (1993, equation 15)",0.42,SOC,alternating,1700,0,in person
+1,15,Faretta-Stutenberg & Morgan-Short (2018),article,The interplay of individual differences and context of learning in behavioral and neurocognitive second language development,Faretta-Stutenberg & Morgan-Short,2018,17,20.18,RT difference score,Spearman-Brown,0.921,SOC,alternating,,0,in person
+1,16,Iizuka & DeKeyser (2023),article,Scrutinizing LLAMA D as a measure of implicit learning aptitude,Iizuka & DeKeyser,2023,109,20.06,RT difference score,0,0.233,SOC,probabilistic,1009,0,in person

@@ -1,0 +1,620 @@
+---
+title: "Meta-analysis: Test-retest reliability of the Serial Reaction Time task"
+author: "Cátia Margarida Oliveira^[OSF page: https://osf.io/dpmfc/], Marianna E. Hayiou-Thomas, Lisa Henderson; University of York"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+<br> <br> This file is licensed under the terms and conditions of the CC-BY 4.0 INTERNATIONAL\
+for details on the license, see\
+<http://creativecommons.org/licenses/by/4.0/>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Import functions
+
+```{r}
+source("utils.R")
+```
+
+# Import libraries
+
+```{r echo = T,warning=FALSE,message=FALSE}
+listOfPackages <- c("rmarkdown","clubSandwich", "metafor","dplyr", "here", "apaTables")
+ipak(listOfPackages)
+```
+
+# Data analysis
+
+```{r echo = T}
+# Read in file
+Data <- read.csv("reliability_data.csv")
+
+#transform correlations into Fisher Z and compute variance for effect sizes
+Data  <- escalc(measure = "ZCOR", ri = Test.retest, ni = N, data = Data, slab=paste(Authors, Year, sep=", "))
+
+#Create column distinguishing variables that account for speed from those which do not
+Data$speed <- ifelse(Data$Measure != "RT difference score", 1,0)
+  
+#Calculate standard error - Borenstein et al. (2009) 
+Data$sei <- sqrt(Data$vi) 
+
+#subset data - include only test-retest reliability for difference scores if available
+Data.DS <- Data[!(Data$Authors=="Oliveira et al." & Data$Trials_included == 1 | Data$Study=="West et al. (2021)" & Data$Measure == "Ratio" | Data$Contrast == 2| Data$Measure == "Regression slopes"),]
+
+# within-study averaging assuming independent sampling errors
+agg <- aggregate(Data.DS, cluster=Data.DS$exp, struct="ID")
+```
+
+# Descriptives
+
+```{r echo = TRUE}
+
+Desc <- Data %>% group_by(exp) %>% summarise(N = max(N), Age = mean(Age), trials = mean(Trials))
+
+Desc
+
+write.csv(Desc, "Desc.stats.tr.csv")
+#write.csv(Desc, "desc.MA.csv")
+
+paste("Number of participants:", sum(Desc$N), "; Mean age (SD)",round(mean(Desc$Age),2), "(", round(sd(Desc$Age),2), ") years;", "Range:", range(Desc$Age)[1],",", range(Desc$Age)[2])
+```
+
+#Preprocessing
+
+```{r}
+Data$group <- ifelse(Data$Age<15, "children", "adult")
+Data$Trials <- scale(Data$Trials)
+Data$Age <- scale(Data$Age)
+```
+
+# Data analysis
+
+## Aggregated
+
+```{r}
+# fit random-effects model ignoring dependency
+res.agg <- rma(yi, vi, data= agg)
+res.agg
+
+#reporter(res.agg)
+```
+
+## Multivariate model - only difference scores
+
+```{r, warning=FALSE}
+res.ml0 <- rma.mv(yi, vi, random = ~ 1 | Study, data= Data.DS)
+res.ml1 <- rma.mv(yi, vi, random = ~ 1 | Study/exp, data=Data.DS)
+res.ml1
+
+# Compare models
+anova(res.ml0, res.ml1)
+
+# compute average odds ratio (and corresponding 95% CI/PI)
+predict(res.ml1, trans = transf.ztor, digits=2)
+
+# RVE SEs and p-values
+coef_test(res.ml1, vcov="CR2", cluster= Data.DS$Study)
+```
+
+## Multivariate model - only difference scores without Oliveira et al. studies
+
+```{r, warning=FALSE}
+
+red.df <- Data.DS[Data.DS$Authors != "Oliveira et al.",]
+
+res.reduced <- rma.mv(yi, vi, random = ~ 1 | Study/exp, data=red.df)
+res.reduced
+
+# compute average odds ratio (and corresponding 95% CI/PI)
+predict(res.reduced, trans = transf.ztor, digits=2)
+
+# RVE SEs and p-values
+coef_test(res.reduced, vcov="CR2", cluster= red.df$Study)
+```
+
+### Forest plot - DS data
+
+```{r}
+
+png("forest_retest-DS.png", width = 1300, height = 1000)
+
+# draw forest plot
+forest(res.ml1, header=TRUE, atransf=transf.ztor, at=transf.rtoz(seq(-.3, 0.9,by=0.1)), refline=coef(res.ml1), ilab.xpos=c(-10,-.5), cex=1.40, xlim = c(-1.3, 2))
+
+### add text with Q-value, dfs, p-value, and I^2 statistic
+text(-1.10, -1, pos=4, cex=1.40, bquote(paste("(Q = ",
+   .(formatC(res.ml1$QE, digits=2, format="f")), ", df = ", .(res.ml1$k - res.ml1$p),
+   ", p =.005)")))
+dev.off()
+
+```
+
+## Multivariate model with covariance matrix - All data
+
+```{r, warning=FALSE}
+Data$obs <- sequence(rle(Data$Study)$lengths)
+
+# construct approx V matrix assuming r=0.6 for the sampling errors
+V <- impute_covariance_matrix(Data$vi, cluster=Data$exp, r=0.6)
+
+# fit multilevel model
+res.ml3 <- rma.mv(yi, V, random = ~ 1 | Study/obs, data= Data)
+res.ml3
+
+# fit multilevel model with nested obs within exp and exp within study
+res2 <- rma.mv(yi, V, random = ~ 1 | Study/exp/obs, data=Data)
+res2
+
+anova(res.ml3, res2) #no significant difference in fit
+
+#check fit
+par(mfrow=c(2,2))
+profile(res2)
+
+# compute average odds ratio (and corresponding 95% CI/PI)
+predict(res2, trans = transf.ztor, digits=2)
+
+# RVE standard errors - guards against model misspecification 
+coef_test(res2, vcov="CR2", cluster= Data$Study)
+
+```
+
+### Forest plot - all data
+
+```{r}
+
+png("forest_retest-all.png", width = 1300, height = 1000)
+pdf("forest_retest-all.pdf", width = 19, height = 14)
+
+# draw forest plot
+forest(res2, header=TRUE, atransf=transf.ztor, at=transf.rtoz(seq(-.4, 0.9,by=0.1)), refline=coef(res2), ilab.xpos=c(-10,-.5), cex=1.40, xlim = c(-1.3, 2))
+
+### add text with Q-value, dfs, p-value, and I^2 statistic
+text(-1.10, -1, pos=4, cex=1.40, bquote(paste("(Q = ",
+   .(formatC(res2$QE, digits=2, format="f")), ", df = ", .(res2$k - res2$p),
+   ", p <.001)")))
+
+dev.off()
+
+```
+
+## Multivariate model with covariance matrix - Without Oliveira et al.
+
+```{r, warning=FALSE}
+
+red.ml <- Data[Data$Authors != "Oliveira et al.",]
+
+red.ml$obs <- sequence(rle(red.ml$Study)$lengths)
+
+# construct approx V matrix assuming r=0.6 for the sampling errors
+V.red <- impute_covariance_matrix(red.ml$vi, cluster=red.ml$exp, r=0.6)
+
+# fit multilevel model with nested obs within exp and exp within study
+res2.red <- rma.mv(yi, V.red, random = ~ 1 | Study/exp/obs, data=red.ml)
+res2.red
+
+# compute average odds ratio (and corresponding 95% CI/PI)
+predict(res2.red, trans = transf.ztor, digits=2)
+
+# RVE standard errors - guards against model misspecification 
+coef_test(res2.red, vcov="CR2", cluster= red.ml$Study)
+
+```
+
+### Sensitivity analysis
+
+```{r}
+
+#combine effect sizes with different correlation sizes
+
+compute_sensitivity <- function(cor, vi, Study) {
+  # construct approx V matrix assuming r=0.6 for the sampling errors
+  V <- impute_covariance_matrix(Data$vi, cluster=Data$exp, r=cor)
+  
+  # fit multivariate model
+  res.sen <- rma.mv(yi, V, random = ~ 1 | Study/exp/obs, data= Data)
+  res.sen
+
+}
+
+results = list()
+for (cor in  seq(.1, 1,.2))  {
+    results[[as.character(cor)]] = compute_sensitivity(cor, vi, Study)
+  }
+
+print(results)
+
+```
+
+## Meta regression {.tabset}
+
+### Measure
+
+```{r, warning=FALSE}
+
+Data %>%
+  group_by(speed) %>%
+  summarise(
+    studies = n_distinct(Study),
+    exp = n_distinct(exp),
+    effects = n())
+
+res.speed <- rma.mv(yi, V, mods= ~ as.factor(speed) -1, random = ~ 1 | Study/exp/obs, data= Data)
+res.speed
+
+# guards against model misspecification
+coef_test(res.speed, vcov="CR2", cluster= Data$Study)
+
+# Robust F-test
+Wald_test(res.speed, constraints = constrain_pairwise(1:2), vcov = "CR2")
+```
+
+### Age
+
+```{r, warning=FALSE}
+
+res.age <- rma.mv(yi, V, mods= ~ Age, random = ~ 1 | Study/exp/obs, data= Data)
+res.age
+
+# guards against model misspecification
+coef_test(res.age, vcov="CR2", cluster= Data$Study)
+
+```
+
+### Dichotomisation of age - Group
+
+```{r echo = FALSE}
+
+Data %>%
+  group_by(group) %>%
+  summarise(
+    studies = n_distinct(Study),
+    exp = n_distinct(exp),
+    effects = n())
+
+res.group <- rma.mv(yi, V, mods= ~ as.factor(group)-1, random = ~ 1 | Study/exp/obs, data= Data)
+res.group
+
+#RVE estimates - guards against model misspecification
+coef_test(res.group, vcov="CR2", cluster= Data$Study)
+
+# Robust F-test
+Wald_test(res.group, constraints = constrain_pairwise(1:2), vcov = "CR2")
+```
+
+### Trials
+
+```{r, warning=FALSE}
+
+res.trials <- rma.mv(yi, V, mods= ~ Trials, random = ~ 1 | Study/exp/obs, data= Data)
+res.trials
+
+# guards against model misspecification
+coef_test(res.trials, vcov="CR2", cluster= Data$Study)
+```
+
+### Sequence type
+
+```{r, warning=FALSE}
+
+Data %>%
+  group_by(SRTT.type) %>%
+  summarise(
+    studies = n_distinct(Study),
+    exp = n_distinct(exp),
+    effects = n())
+
+Data.SRTT.type <- subset(Data, SRTT.type != "alternating")
+
+V.SRTT.type <- impute_covariance_matrix(Data.SRTT.type$vi, cluster=Data.SRTT.type$Study, r=cor)
+
+res.SRTT.type <- rma.mv(yi, V.SRTT.type, mods= ~ as.factor(SRTT.type)-1, random = ~ 1 | Study/exp/obs, data = Data.SRTT.type)
+res.SRTT.type
+
+# guards against model misspecification
+coef_test(res.SRTT.type, vcov="CR2", cluster= Data.SRTT.type$Study)
+
+# Robust F-test
+Wald_test(res.SRTT.type, constraints = constrain_pairwise(1:2), vcov = "CR2")
+```
+
+### ISI
+
+```{r, warning=FALSE}
+
+Data %>%
+  group_by(ISI) %>%
+  summarise(
+    studies = n_distinct(Study),
+    exp = n_distinct(exp),
+    effects = n())
+
+Data.ISI <- Data[Data$ISI == 0| Data$ISI == 250,]
+
+V.ISI <- impute_covariance_matrix(Data.ISI$vi, cluster=Data.ISI$exp, r=cor)
+
+res.ISI <- rma.mv(yi, V.ISI, mods= ~ as.factor(ISI)-1, random = ~ 1 | Study/exp/obs, data= Data.ISI)
+res.ISI
+
+# guards against model misspecification
+coef_test(res.ISI, vcov="CR2", cluster= Data.ISI$Study)
+
+# Robust F-test
+Wald_test(res.ISI, constraints = constrain_pairwise(1:2), vcov = "CR2")
+```
+
+### Interval
+
+```{r echo = FALSE}
+
+Data.int <- Data[!is.na(as.numeric(Data$Interval)), ]
+V.int <- impute_covariance_matrix(Data.int$vi, cluster=Data.int$exp, r=cor)
+
+res.interval <- rma.mv(yi, V.int, mods= ~ scale(as.numeric(Interval)), random = ~ 1 | Study/exp/obs, data= Data.int)
+res.interval
+
+#RVE estimates - guards against model misspecification
+coef_test(res.interval, vcov="CR2", cluster= Data.int$Study)
+```
+
+### Trials included
+
+```{r echo = FALSE}
+
+Data %>%
+  group_by(Trials_included) %>%
+  summarise(
+    studies = n_distinct(Study),
+    exp = n_distinct(exp),
+    effects = n())
+
+res.trials_included <- rma.mv(yi, V, mods= ~ as.factor(Trials_included)-1, random = ~ 1 | Study/exp/obs, data= Data)
+res.trials_included
+
+#RVE estimates - guards against model misspecification
+coef_test(res.trials_included, vcov="CR2", cluster= Data$Study)
+
+# Robust F-test
+Wald_test(res.trials_included, constraints = constrain_pairwise(1:2), vcov = "CR2")
+```
+
+### Design
+
+```{r echo = FALSE}
+
+Data %>%
+  group_by(design) %>%
+  summarise(
+    studies = n_distinct(Study),
+    exp = n_distinct(exp),
+    effects = n())
+
+res.design <- rma.mv(yi, V, mods= ~ as.factor(design)-1, random = ~ 1 | Study/exp/obs, data= Data)
+res.design
+
+#RVE estimates - guards against model misspecification
+coef_test(res.design, vcov="CR2", cluster= Data$Study)
+
+# Robust F-test
+Wald_test(res.design, constraints = constrain_pairwise(1:2), vcov = "CR2")
+```
+
+
+# Publication bias and Influential/Outliers
+
+## Aggregated effect sizes {.tabset}
+
+### Funnel Plots
+
+```{r, warning=FALSE}
+
+### set up 2x2 array for plotting
+par(mfrow=c(2,2))
+
+### draw funnel plots
+funnel(res.agg, main="Standard Error")
+funnel(res.agg, yaxis="vi", main="Sampling Variance")
+funnel(res.agg, yaxis="seinv", main="Inverse Standard Error")
+funnel(res.agg, yaxis="vinv", main="Inverse Sampling Variance")
+dev.off()
+
+### funnel plot
+funnel(res.agg, xlab = "Reliability coefficient")
+
+### create contour enhanced funnel plot (with funnel centered at 0)
+funnel(res.agg, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0, legend=TRUE)
+```
+
+### Egger's regression test/ PET-PEESE procedure
+
+```{r, warning=FALSE}
+
+# regression test for funnel plot asymmetry
+regtest(res.agg) # uses the SEs as predictor by default
+regtest(res.agg, predictor="vi") # use the variances as predictor
+```
+
+### Rank correlation test
+
+```{r, warning=FALSE}
+
+#Tests for bias
+ranktest(res.agg, exact = FALSE)
+```
+
+### Outlier/influential points detection
+
+```{r echo = T, out.width="50%", warning=FALSE}
+par("mar")
+
+### calculate influence diagnostics
+inf <- influence(res.agg)
+
+# save influential outlier case numbers in vector
+which(inf$is.infl == "TRUE")
+ 
+### plot the influence diagnostics
+plot(inf)
+```
+
+## All effect sizes {.tabset}
+
+### Funnel Plots
+
+```{r, warning=FALSE}
+
+### set up 2x2 array for plotting
+par(mfrow=c(2,2))
+
+### draw funnel plots
+funnel(res.ml1, main="Standard Error")
+funnel(res.ml1, yaxis="vi", main="Sampling Variance")
+funnel(res.ml1, yaxis="seinv", main="Inverse Standard Error")
+funnel(res.ml1, yaxis="vinv", main="Inverse Sampling Variance")
+dev.off()
+
+```
+
+```{r contour li}
+
+png("funnel.test-retest.png", width = 1300, height = 700)
+pdf("funnel.test-retest.pdf", width = 14, height = 7)
+
+par(mfrow=c(1,2))
+### funnel plot
+fp1 <- funnel(res2, back = "white")
+
+### create contour enhanced funnel plot (with funnel centered at 0)
+fp2<- funnel(res2, level=c(90, 95, 99), shade=c("white", "orange", "red"), refline=0, legend = TRUE, back = "white")
+
+dev.off()
+```
+
+### Egger's regression test
+
+```{r, warning=FALSE}
+
+res.PET <- rma.mv(yi, vi, mods = ~ sei, random = ~ 1 | Study/exp, data=Data.DS)
+res.PET
+
+# run the regression test (with Vis as predictor) manually
+res.ml.PET <- rma.mv(yi, V, mods = ~ sei, random = ~ 1 | Study/exp/obs, data=Data)
+res.ml.PET
+
+```
+
+### Influential points {.tabset}
+
+#### Effect size level
+
+##### All data
+
+```{r}
+CD2 <- cooks.distance(res2)
+plot(CD2, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+print(CD2)
+
+DFbetas2 <- dfbetas(res2)
+plot(DFbetas2$intrcpt, type="o", pch=19, xlab="Observed Outcome", ylab="DF betas")
+
+DFbetas2$scale <- scale(DFbetas2$intrcpt)
+
+```
+
+
+#### Experiment level
+
+##### DS data
+
+```{r}
+CD.cluster1 <- cooks.distance(res.ml1, cluster = Data.DS$exp)
+plot(CD.cluster1, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+axis(side=1, at=seq_along(CD.cluster1), labels=as.numeric(names(CD.cluster1)))
+print(names(CD.cluster1))
+
+DFbetas.exp1 <- dfbetas(res.ml1, cluster = Data.DS$exp)
+plot(DFbetas.exp1$intrcpt, type="o", pch=19, xlab="Observed Outcome", ylab="DF betas")
+DFbetas.exp1$scale <- scale(DFbetas.exp1$intrcpt)
+
+```
+
+##### All data
+
+```{r}
+CD.cluster2 <- cooks.distance(res2, cluster = Data$exp)
+plot(CD.cluster2, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+axis(side=1, at=seq_along(CD.cluster2), labels=as.numeric(names(CD.cluster2)))
+print(names(CD.cluster2))
+
+DFbetas.exp2 <- dfbetas(res2, cluster = Data$exp)
+plot(DFbetas.exp2$intrcpt, type="o", pch=19, xlab="Observed Outcome", ylab="DF betas")
+DFbetas.exp2$scale <- scale(DFbetas.exp2$intrcpt)
+```
+
+#### Study level
+
+##### DS data
+```{r}
+CD.cluster3 <- cooks.distance(res.ml1, cluster = Data.DS$Study)
+plot(CD.cluster3, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+axis(side=1, at=seq_along(CD.cluster3), labels=as.numeric(names(CD.cluster3)))
+
+print(names(CD.cluster3))
+
+DFbetas.study3 <- dfbetas(res.ml1, cluster = Data.DS$Study)
+plot(DFbetas.study3$intrcpt, type="o", pch=19, xlab="Observed Outcome", ylab="DF betas")
+
+DFbetas.study3$scale <- scale(DFbetas.study3$intrcpt)
+
+```
+
+
+##### All data
+```{r}
+CD.cluster4 <- cooks.distance(res2, cluster = Data$Study)
+plot(CD.cluster4, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+axis(side=1, at=seq_along(CD.cluster4), labels=as.numeric(names(CD.cluster4)))
+print(names(CD.cluster4))
+
+DFbetas.study4 <- dfbetas(res2, cluster = Data$Study)
+plot(DFbetas.study4$intrcpt, type="o", pch=19, xlab="Observed Outcome", ylab="DF betas")
+DFbetas.study4$scale <- scale(DFbetas.study4$intrcpt)
+
+```
+
+### Outliers
+
+#### DS data
+
+```{r}
+sr <- rstudent(res.ml1)
+
+plot(sr$z, type="o", pch=19, xlab="Observed Outcome", ylab="Studentised residuals") +abline(h = 1.96, lty = 2, col = "tomato4")
+
+print(sr$slab)
+```
+
+#### All data
+
+```{r}
+sr2 <- rstudent(res2)
+
+plot(sr2$z, type="o", pch=19, xlab="Observed Outcome", ylab="Studentised residuals") +abline(h = 1.96, lty = 2, col = "tomato4")
+
+print(sr2$slab)
+```
+
+
+# References
+
+Viechtbauer, W. (2021). An overview of the metafor package with some interesting applications. Annual Meeting of the Society for Research Synthesis Methodology, Online. <https://www.wvbauer.com/doku.php/presentations>
+
+<https://wviechtb.github.io/metafor/reference/rma.mv.html>
+
+Assink, M., & Wibbelink, C. J. M. (2016). Fitting three-level meta-analytic models in R: A step-by-step tutorial. The Quantitative Methods for Psychology, 12(3), 154--174. <https://doi.org/10.20982/tqmp.12.3.p154>
